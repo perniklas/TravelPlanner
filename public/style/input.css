@@ -1,0 +1,63 @@
+.input-bordered {
+    padding: 5px 15px;
+    background: transparent;
+    border: 2px solid #046be2;
+    border-radius: 1em;
+    transition: ease 0.4s;
+    width: 80%;
+}
+
+.input-bordered:hover, .input-bordered:focus {
+    border: 2px solid #013661;
+    border-radius: 1em;
+    outline: none;
+}
+
+.input-bordered:focus {
+    background-color: rgb(1, 54, 97, 0.075);
+}
+
+.button {
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #046be2;
+    padding: 5px 15px;
+    background: transparent;
+    border: 2px solid #046be2;
+    border-radius: 1em;
+    transition: ease 0.4s;
+    font-size: 1em;
+    display: block;
+    margin: 25px 0 25px 132px;
+}
+
+.button-fill:hover {
+    background-color: #046be2;
+    border: 2px solid #046be2;
+    color: white;
+}
+
+.button:focus {
+    border: 2px solid #046be2;
+    border-radius: 1em;
+    outline: none;
+}
+
+.auth-container .button {
+    width: 130px;
+}
+
+.auth-container span {
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 600px) {
+    .auth-container .button {
+        margin: 25px auto;
+    }
+    
+    .auth-container span {
+        margin: 25px auto;
+    }
+}
