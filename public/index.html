@@ -8,10 +8,22 @@
     <script defer src="/__/firebase/7.14.6/firebase-auth.js"></script>
     <script defer src="/__/firebase/7.14.6/firebase-firestore.js"></script>
     <script defer src="/__/firebase/init.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>    <script defer src="/__/firebase/7.14.6/firebase-app.js"></script>
-    <script src="scripts/ui.js"></script>
-    <script src="scripts/auth.js"></script>
-    <script src="scripts/main.js"></script>
+    <script defer src="scripts/ui.js"></script>
+    <script defer src="scripts/auth.js"></script>
+    <script defer src="scripts/map.js"></script>
+    <script defer src="scripts/db.js"></script>
+    <script defer src="scripts/main.js"></script>
+    
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-scrollbar@latest/simple-scrollbar.css">
+    <script src="https://cdn.jsdelivr.net/npm/simple-scrollbar@latest/simple-scrollbar.min.js"></script> -->
+    
+    <script defer src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.js'></script>
+    <script defer src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.js.map'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css' rel='stylesheet' />
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a5e06967b6.js" crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="style/style.css" type="text/css">
     <link rel="stylesheet" href="style/input.css" type="text/css">
   </head>
@@ -21,10 +33,10 @@
         <form id="auth-login-form" class="auth-container">
           <h4 class="error"></h4>
           <label for="auth-login-form-email">Email</label>
-          <input type="email" class="input-bordered" id="auth-login-form-email"/>
+          <input type="email" class="input-bordered" id="auth-login-form-email" required/>
 
           <label for="auth-login-form-password">Password</label>
-          <input type="password" class="input-bordered" id="auth-login-form-password"/>
+          <input type="password" class="input-bordered" id="auth-login-form-password" required/>
           
           <button type="submit" class="button button-fill">Log in</button>
           <hr>
@@ -34,21 +46,33 @@
         <form id="auth-signup-form" class="auth-container hidden">
           <h4 class="error"></h4>
           <label for="auth-signup-form-email">Email</label>
-          <input type="email" class="input-bordered" id ="auth-signup-form-email"/>
+          <input type="email" class="input-bordered" id ="auth-signup-form-email" required/>
 
           <label for="auth-signup-form-password">Password</label>
-          <input type="password" class="input-bordered" id="auth-signup-form-password"/>
+          <input type="password" class="input-bordered" id="auth-signup-form-password" required/>
 
           <label for="auth-signup-form-password">Repeat password</label>
-          <input type="password" class="input-bordered" id="auth-signup-form-password-confirm"/>
+          <input type="password" class="input-bordered" id="auth-signup-form-password-confirm" required/>
           
-          <span type="submit" class="button button-fill">sign up</span>
+          <button type="submit" class="button button-fill">sign up</button>
           <hr>
           <span class="auth-toggle button button-fill">or Log in</span>
         </form>
       </section>
     </section>
-    <section id="map" class="content-section hidden">
+    <section id="map-container" class="content-section hidden">
+      <button class="button button-fill" id="map-container-menu-toggle"><i class="fas fa-bars"></i></button>
+      <section id="map-container-menu" class="hidden" >
+        <div id="map-container-menu-header">
+          <h3>Hei hei</h3>
+          <button id="create-trip" class="button button-fill">+</button>
+        </div>
+        <div id="map-container-menu-content" ss-container>
+          <span>Det jobbes</span>
+          <div id="map-container-menu-content-tripList"></div>
+        </div>
+      </section>
+      <div id="map"></div>
         
     </section>
     <div id="loading-fullscreen" class="hidden">

@@ -29,11 +29,11 @@
     transition: ease 0.4s;
     font-size: 1em;
     display: block;
-    margin: 25px 0 25px 132px;
+    margin: 25px 0 25px 132px; /* REMOVE THIS SHIT */
 }
 
 .button-fill:hover {
-    background-color: #046be2;
+    background-color: #046be2 !important;
     border: 2px solid #046be2;
     color: white;
 }
@@ -50,6 +50,26 @@
 
 .auth-container span {
     box-sizing: border-box;
+}
+
+#map-container-menu-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 90000;
+    margin: 0;
+    background-color: white;
+}
+
+.triplist-trash {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+}
+
+.ss-scroll {
+    background: rgba(4, 107, 226, 0.2) !important;
 }
 
 @media screen and (max-width: 600px) {

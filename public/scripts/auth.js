@@ -1,10 +1,12 @@
 var Authentication = {
     auth: firebase.auth(),
-    initAuth: function() {
+    initAuth: function(callback = null) {
         Authentication.auth.onAuthStateChanged((user) => {
             if (user) {
                 if (user.email) {
                     UI.login();
+                    Authentication.currentUser = user;
+                    if (callback) callback();
                 }
             } else {
                 /* User logs out */
@@ -13,11 +15,23 @@ var Authentication = {
         });
     },
     login: function(email, password) {
-
+        Authentication.auth.signInWithEmailAndPassword(email, password).then((cred) => {
+            $('#auth-login-form').trigger('reset');
+            UI.login();
+        }).catch(err => {
+            console.log('[ERROR]: ' + err);
+            $('#auth-signup-form .error').text(err.message).slideDown();   
+        });
     },
     signup: function(email, password, repeatpassword) {
-        if (verifyPasswords(password, repeatpassword) && verifyEmail(email)) {
-
+        if (verifyEmail(email) && verifyPasswords(password, repeatpassword)) {
+            Authentication.auth.createUserWithEmailAndPassword(email, password).then((cred) => {
+                $('#auth-signup-form').trigger('reset');
+                $('#auth-signup-form .error').hide();
+            }).catch((err) => {
+                console.log('[ERROR]: ' +err);
+                $('#auth-signup-form .error').text(err.message).slideDown();
+            })
         }
     },
     currentUser: null
