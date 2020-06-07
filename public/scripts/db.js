@@ -2,20 +2,23 @@ var DB = {
     fs: firebase.firestore(),
     createNewTrip: () => {
         DB.fs.collection('trips').doc(
-            Authentication.currentUser.uid +
-            "--" + new Date().toISOString()
+            Authentication.currentUser.uid + "--" + new Date().toISOString()
         ).set({
             userIDs: [Authentication.currentUser.uid],
             ownerID: Authentication.currentUser.uid,
             title: DB.generateTitle(),
             created: new Date().toISOString()
+        }).then(trip => {
+            return trip;
         });
     },
-    updateTripWithDetails: (tripRef, details) => {
+    updateTripWithDetails: (tripRef, details, callback = null) => {
         DB.fs.collection("trips").doc(tripRef.id).update({
             start: details.start,
             end: details.end,
             title: details.title
+        }).then((trip) => {
+            if (callback) callback();
         });
     },
     deleteTrip: (trip) => {
@@ -23,19 +26,70 @@ var DB = {
             trip.ref.delete();
         }
     },
-    addCountryToTrip: () => {
-
+    addCountryToTrip: (data) => {
+        if (!data) return;
+        DB.fs.collection('countries').doc(
+            Authentication.currentUser.uid + "--" + data.country
+        ).set({
+            userIDs: DB.currentTrip.data.userIDs,
+            ownerID: Authentication.currentUser.uid,
+            name: data.country,
+            created: new Date().toISOString(),
+            tripID: DB.currentTrip.ref.id,
+            latlng: {
+                lat: data.latlng.lat,
+                lng: data.latlng.lng
+            }
+        }).then(country => {
+            console.log(country);
+        });
     },
-    addCityToCountry: () => {
-
+    addCityToCountry: (data) => {
+        if (!data) return;
+        DB.fs.collection('cities').doc(
+            Authentication.currentUser.uid + "--" + data.city
+        ).set({
+            userIDs: DB.currentTrip.data.userIDs,
+            ownerID: Authentication.currentUser.uid,
+            name: data.city,
+            created: new Date().toISOString(),
+            tripID: DB.currentTrip.ref.id,
+            latlng: {
+                lat: data.latlng.lat,
+                lng: data.latlng.lng
+            }
+        }).then(city => {
+            console.log(city);
+        });
     },
-    addPlaceToCity: () => {
-
+    addPlaceToCity: (data) => {
+        if (!data) return;
+        DB.fs.collection('places').doc(
+            Authentication.currentUser.uid + "--" + data.place
+        ).set({
+            userIDs: DB.currentTrip.data.userIDs,
+            ownerID: Authentication.currentUser.uid,
+            name: data.place,
+            created: new Date().toISOString(),
+            tripID: DB.currentTrip.ref.id,
+            latlng: {
+                lat: data.latlng.lat,
+                lng: data.latlng.lng
+            }
+        }).then(place => {
+            console.log(place);
+        });
     },
     updateTripWithGuests: (tripRef, guests) => {
-        DB.fs.collection("trips").doc(tripRef.id).update({
-            userIDs: guests
-        });
+        if (guests.isArray()){
+            DB.fs.collection("trips").doc(tripRef.id).update({
+                userIDs: guests
+            }).then(trip => {
+                console.log('Updated trip with guests ' + guests);
+            });
+        } else {
+            console.log('Guests needs to be an array of IDs');
+        }
     },
     getMyTrips: (callback = null) =>  {
         DB.tripsListener = DB.fs.collection("trips")
@@ -49,12 +103,17 @@ var DB = {
                 });
 
                 addTripsToSidebar();
+                addMarkersToMap();
                 if (callback) callback();
             });
     },
     myTrips: [],
     myTripsData: [],
     tripsListener: null,
+    currentTrip: null,
+    currentCountry: null,
+    currentCity: null,
+    currentPlace: null,
     closeTripsListener: () => {
         if (DB.tripsListener) DB.tripsListener();
     },
@@ -65,6 +124,13 @@ var DB = {
             length += 1;
         }
         return title + length;
+    },
+    getTripByID: id => {
+        var match;
+        $.each(DB.myTrips, function(index, trip) {
+            if (trip.id == id) match = trip;
+        });
+        return match;
     }
 }
 
@@ -72,10 +138,17 @@ function isTitleTaken(title) {
     return DB.myTripsData.includes(title);
 }
 
-function getTripByID(id) {
-    var match;
-    $.each(DB.myTrips, function(index, trip) {
-        if (trip.id == id) match = trip;
-    });
-    return match;
-}
+// let countryName = 'Thecountry';
+// let subCollection = DB.fs.collection('trips').doc(
+//         DB.currentTrip.ref.id
+//     ).collection('countries');
+// subCollection.doc(
+//     Authentication.currentUser.uid + "--" + countryName
+// ).set({
+//     userIDs: DB.currentTrip.data.userIDs,
+//     ownerID: Authentication.currentUser.uid,
+//     title: 'Country name',
+//     created: new Date().toISOString()
+// }).then(country => {
+//     console.log(country)
+// });

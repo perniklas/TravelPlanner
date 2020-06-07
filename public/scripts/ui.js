@@ -36,5 +36,13 @@ var UI = {
         // } else {
         //     wrapper.find('.ss-content').css('width', wrapper.css('width'));
         // }
+    },
+    addTripDetails: (tripObj = null) => {
+        if (tripObj) {
+            $('#trip-form-title').val(tripObj.data.title);
+            $('#trip-form-start').val(new Date(tripObj.data.start));
+            $('#trip-form-end').val(new Date(tripObj.data.end));
+        }
+        $('#map-container-trip').slideDown();
     }
 }

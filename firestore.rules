@@ -7,5 +7,20 @@ service cloud.firestore {
       allow read, write: if resource.data.ownerID == string(request.auth.uid);
       allow create: if request.auth.uid != null;
     }
+    match /countries/{document=**} {
+      allow write: if string(request.auth.uid) in resource.data.userIDs;
+      allow read, write: if resource.data.ownerID == string(request.auth.uid);
+      allow create: if request.auth.uid != null;
+    }
+    match /cities/{document=**} {
+      allow write: if string(request.auth.uid) in resource.data.userIDs;
+      allow read, write: if resource.data.ownerID == string(request.auth.uid);
+      allow create: if request.auth.uid != null;
+    }
+    match /places/{document=**} {
+      allow write: if string(request.auth.uid) in resource.data.userIDs;
+      allow read, write: if resource.data.ownerID == string(request.auth.uid);
+      allow create: if request.auth.uid != null;
+    }
   }
 }

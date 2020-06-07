@@ -1,6 +1,6 @@
 var Authentication = {
     auth: firebase.auth(),
-    initAuth: function(callback = null) {
+    initAuth: (callback = null) => {
         Authentication.auth.onAuthStateChanged((user) => {
             if (user) {
                 if (user.email) {

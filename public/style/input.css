@@ -29,7 +29,33 @@
     transition: ease 0.4s;
     font-size: 1em;
     display: block;
-    margin: 25px 0 25px 132px; /* REMOVE THIS SHIT */
+}
+
+.auth-container label:first-child, #map-container-trip-form label:first-child {
+    padding: 0 0 10px 20px;
+}
+
+.auth-container label:not(:first-child), #map-container-trip-form label:not(:first-child) {
+    padding: 25px 0 10px 20px;
+}
+
+.auth-container label, #map-container-trip-form label {
+    display: block;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#auth-login .button {
+    margin: 25px 0 25px 132px;
+}
+
+#map-container-trip-form {
+    width: calc(100% - 40px);
+    padding: 20px;
+}
+
+#map-container-trip-form input {
+    width: inherit;
 }
 
 .button-fill:hover {
@@ -68,8 +94,12 @@
     transform: translateY(-50%);
 }
 
-.ss-scroll {
-    background: rgba(4, 107, 226, 0.2) !important;
+#create-trip, #map-container-trip-close {
+    position: absolute;
+    top: 50%;
+    margin: 0;
+    transform: translateY(-50%);
+    right: 30px;
 }
 
 @media screen and (max-width: 600px) {
